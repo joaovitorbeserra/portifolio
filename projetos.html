@@ -1,440 +1,910 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - BI Analytics</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
-    <script>
-        tailwind.config = {
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Dashboard - BI Analytics</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="styles.css" />
+      <script>
+         tailwind.config = {
             theme: {
-                extend: {
-                    colors: {
-                        background: 'hsl(210 20% 98%)',
-                        foreground: 'hsl(215 25% 15%)',
-                        card: 'hsl(0 0% 100%)',
-                        'card-foreground': 'hsl(215 25% 15%)',
-                        primary: 'hsl(214 85% 45%)',
-                        'primary-foreground': 'hsl(0 0% 100%)',
-                        'primary-glow': 'hsl(214 85% 65%)',
-                        secondary: 'hsl(210 30% 92%)',
-                        'secondary-foreground': 'hsl(215 25% 15%)',
-                        muted: 'hsl(210 25% 95%)',
-                        'muted-foreground': 'hsl(215 15% 50%)',
-                        accent: 'hsl(199 89% 48%)',
-                        'accent-foreground': 'hsl(0 0% 100%)',
-                        destructive: 'hsl(0 84.2% 60.2%)',
-                        'destructive-foreground': 'hsl(0 0% 100%)',
-                        border: 'hsl(214 25% 88%)',
-                        input: 'hsl(214 25% 90%)',
-                        ring: 'hsl(214 85% 45%)',
-                    },
-                    borderRadius: {
-                        lg: '0.75rem',
-                        md: 'calc(0.75rem - 2px)',
-                        sm: 'calc(0.75rem - 4px)',
-                    },
-                }
-            }
-        }
-    </script>
-</head>
-<body class="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-background">
-    <!-- Header -->
-    <header class="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10 shadow-sm">
-        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+               extend: {
+                  colors: {
+                     background: 'hsl(210 20% 98%)',
+                     foreground: 'hsl(215 25% 15%)',
+                     card: 'hsl(0 0% 100%)',
+                     'card-foreground': 'hsl(215 25% 15%)',
+                     primary: 'hsl(214 85% 45%)',
+                     'primary-foreground': 'hsl(0 0% 100%)',
+                     'primary-glow': 'hsl(214 85% 65%)',
+                     secondary: 'hsl(210 30% 92%)',
+                     'secondary-foreground': 'hsl(215 25% 15%)',
+                     muted: 'hsl(210 25% 95%)',
+                     'muted-foreground': 'hsl(215 15% 50%)',
+                     accent: 'hsl(199 89% 48%)',
+                     'accent-foreground': 'hsl(0 0% 100%)',
+                     destructive: 'hsl(0 84.2% 60.2%)',
+                     'destructive-foreground': 'hsl(0 0% 100%)',
+                     border: 'hsl(214 25% 88%)',
+                     input: 'hsl(214 25% 90%)',
+                     ring: 'hsl(214 85% 45%)',
+                  },
+                  borderRadius: {
+                     lg: '0.75rem',
+                     md: 'calc(0.75rem - 2px)',
+                     sm: 'calc(0.75rem - 4px)',
+                  },
+               },
+            },
+         };
+      </script>
+   </head>
+   <body
+      class="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-background"
+   >
+      <!-- Header -->
+      <header
+         class="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10 shadow-sm"
+      >
+         <div
+            class="container mx-auto px-4 h-16 flex items-center justify-between"
+         >
             <nav class="flex items-center gap-6">
-                <a href="https://wa.me/5565996963223" target="_blank" class="text-sm text-muted-foreground">Whatsapp</a>
-                <a href="mailto:joaovitorbeserra@hotmail.com" target="_blank" class="text-sm text-muted-foreground">E-mail</a>
-                <a href="https://www.linkedin.com/in/joaobeserra/" target="_blank" class="text-sm text-muted-foreground">LinkedIn</a>
+               <a
+                  href="https://wa.me/5565996963223"
+                  target="_blank"
+                  class="text-sm text-muted-foreground"
+                  >Whatsapp</a
+               >
+               <a
+                  href="mailto:joaovitorbeserra@hotmail.com"
+                  target="_blank"
+                  class="text-sm text-muted-foreground"
+                  >E-mail</a
+               >
+               <a
+                  href="https://www.linkedin.com/in/joaobeserra/"
+                  target="_blank"
+                  class="text-sm text-muted-foreground"
+                  >LinkedIn</a
+               >
             </nav>
             <div class="flex items-center gap-3">
-                <div id="dropdown" class="hidden absolute right-4 top-16 mt-2 w-56 bg-card rounded-md shadow-lg border border-border z-20">
-                    <div class="p-2">
-                        <div class="px-3 py-2 text-sm font-semibold text-foreground">Configurações</div>
-                        <hr class="my-2 border-border">
-                        <a href="#" onclick="openSheet('people')" class="flex items-center px-3 py-2 text-sm text-foreground hover:bg-secondary rounded-md">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                            Pessoas Cadastradas
-                        </a>
-                        <a href="#" onclick="openSheet('companies')" class="flex items-center px-3 py-2 text-sm text-foreground hover:bg-secondary rounded-md">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                            </svg>
-                            Empresas Cadastradas
-                        </a>
-                    </div>
-                </div>
-                
+               <div
+                  id="dropdown"
+                  class="hidden absolute right-4 top-16 mt-2 w-56 bg-card rounded-md shadow-lg border border-border z-20"
+               >
+                  <div class="p-2">
+                     <div
+                        class="px-3 py-2 text-sm font-semibold text-foreground"
+                     >
+                        Configurações
+                     </div>
+                     <hr class="my-2 border-border" />
+                     <a
+                        href="#"
+                        onclick="openSheet('people')"
+                        class="flex items-center px-3 py-2 text-sm text-foreground hover:bg-secondary rounded-md"
+                     >
+                        <svg
+                           class="w-4 h-4 mr-2"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                           ></path>
+                        </svg>
+                        Pessoas Cadastradas
+                     </a>
+                     <a
+                        href="#"
+                        onclick="openSheet('companies')"
+                        class="flex items-center px-3 py-2 text-sm text-foreground hover:bg-secondary rounded-md"
+                     >
+                        <svg
+                           class="w-4 h-4 mr-2"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                           ></path>
+                        </svg>
+                        Empresas Cadastradas
+                     </a>
+                  </div>
+               </div>
             </div>
-        </div>
-    </header>
+         </div>
+      </header>
 
-    <main class="container mx-auto px-4 py-8 space-y-8">
-        <!-- Stats Cards -->
+      <main class="container mx-auto px-4 py-8 space-y-8">
+         <!-- Stats Cards -->
 
-
-        <!-- Dashboards Section -->
-        <div class="space-y-4">
+         <!-- Dashboards Section -->
+         <div class="space-y-4">
             <div>
-                <h2 class="text-2xl font-bold text-foreground">Painéis de BI</h2>
-                <p class="text-muted-foreground">Explore alguns projetos que já desenvolvi</p>
+               <h2 class="text-2xl font-bold text-foreground">Painéis de BI</h2>
+               <p class="text-muted-foreground">
+                  Explore alguns projetos que já desenvolvi
+               </p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between">
-                            <div class="space-y-1 flex-1">
-                                <h3 class="text-lg font-semibold text-foreground">Dashboard Análise de vendas</h3>
-                                <p class="text-sm text-muted-foreground flex items-center gap-2">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    Empresa Ficticia
-                                </p>
-                                <p class="text-sm text-muted-foreground">Power BI</p>
-                            </div>
+               <!-- Dashboard análise de vendas -->
+               <div
+                  class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30"
+               >
+                  <div class="p-6">
+                     <div class="flex items-start justify-between">
+                        <div class="space-y-1 flex-1">
+                           <h3 class="text-lg font-semibold text-foreground">
+                              Dashboard Análise comercial
+                           </h3>
+                           <p
+                              class="text-sm text-muted-foreground flex items-center gap-2"
+                           >
+                              <svg
+                                 class="w-3 h-3"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                 ></path>
+                              </svg>
+                              Empresa Ficticia
+                           </p>
+                           <p class="text-sm text-muted-foreground">Power BI</p>
                         </div>
-                    </div>
-                    <div class="px-6 pb-6 space-y-4">
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiZjdlNWJmMzktNTI5MC00OTBmLTgyYTAtMWU2NGNhYzI2M2UzIiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Visualizar
-                        </a>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+                  <div class="px-6 pb-6 space-y-4">
+                     <a
+                        href="https://app.powerbi.com/view?r=eyJrIjoiMjU1Mjc4ZGItMmE5My00YmFmLWE5MDMtNzA5OGE3NGFlYjgyIiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm"
+                     >
+                        <svg
+                           class="w-4 h-4"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                           ></path>
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                           ></path>
+                        </svg>
+                        Visualizar
+                     </a>
+                  </div>
+               </div>
+               <!-- Dashboard análise de vendas -->
+               <div
+                  class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30"
+               >
+                  <div class="p-6">
+                     <div class="flex items-start justify-between">
+                        <div class="space-y-1 flex-1">
+                           <h3 class="text-lg font-semibold text-foreground">
+                              Relatório de resultados
+                           </h3>
+                           <p
+                              class="text-sm text-muted-foreground flex items-center gap-2"
+                           >
+                              <svg
+                                 class="w-3 h-3"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                 ></path>
+                              </svg>
+                              Empresa Ficticia
+                           </p>
+                           <p class="text-sm text-muted-foreground">Power BI</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="px-6 pb-6 space-y-4">
+                     <a
+                        href="https://app.powerbi.com/view?r=eyJrIjoiZWNiNjRiZTUtNGI5NC00YTQ0LWEyY2YtZGUxZmM1ZjUzZTA3IiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm"
+                     >
+                        <svg
+                           class="w-4 h-4"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                           ></path>
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                           ></path>
+                        </svg>
+                        Visualizar
+                     </a>
+                  </div>
+               </div>
 
-                <div class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between">
-                            <div class="space-y-1 flex-1">
-                                <h3 class="text-lg font-semibold text-foreground">Relatório de resultados</h3>
-                                <p class="text-sm text-muted-foreground flex items-center gap-2">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    Empresa Ficticia
-                                </p>
-                                <p class="text-sm text-muted-foreground">Power BI</p>
-                            </div>
+               <div
+                  class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30"
+               >
+                  <div class="p-6">
+                     <div class="flex items-start justify-between">
+                        <div class="space-y-1 flex-1">
+                           <h3 class="text-lg font-semibold text-foreground">
+                              Análise de dados da fifa com Streamlit
+                           </h3>
+                           <p
+                              class="text-sm text-muted-foreground flex items-center gap-2"
+                           >
+                              <svg
+                                 class="w-3 h-3"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                 ></path>
+                              </svg>
+                              Empresa ficticia
+                           </p>
+                           <p class="text-sm text-muted-foreground">
+                              Python/Streamlit
+                           </p>
                         </div>
-                    </div>
-                    <div class="px-6 pb-6 space-y-4">
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiZWNiNjRiZTUtNGI5NC00YTQ0LWEyY2YtZGUxZmM1ZjUzZTA3IiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Visualizar
-                        </a>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+                  <div class="px-6 pb-6 space-y-4">
+                     <a
+                        href="https://appfifa-d9kckzwztxuxpaan7ppbyd.streamlit.app/"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm"
+                     >
+                        <svg
+                           class="w-4 h-4"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                           ></path>
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                           ></path>
+                        </svg>
+                        Visualizar
+                     </a>
+                  </div>
+               </div>
 
-                <div class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between">
-                            <div class="space-y-1 flex-1">
-                                <h3 class="text-lg font-semibold text-foreground">Análise de dados da fifa com Streamlit</h3>
-                                <p class="text-sm text-muted-foreground flex items-center gap-2">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    Empresa ficticia
-                                </p>
-                                <p class="text-sm text-muted-foreground">Python/Streamlit</p>
-                            </div>
+               <div
+                  class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30"
+               >
+                  <div class="p-6">
+                     <div class="flex items-start justify-between">
+                        <div class="space-y-1 flex-1">
+                           <h3 class="text-lg font-semibold text-foreground">
+                              Analisador de Vendas
+                           </h3>
+                           <p
+                              class="text-sm text-muted-foreground flex items-center gap-2"
+                           >
+                              <svg
+                                 class="w-3 h-3"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                 ></path>
+                              </svg>
+                              Empresa ficticia
+                           </p>
+                           <p class="text-sm text-muted-foreground">
+                              Python/Streamlit
+                           </p>
                         </div>
-                    </div>
-                    <div class="px-6 pb-6 space-y-4">
-                        <a href="https://appfifa-d9kckzwztxuxpaan7ppbyd.streamlit.app/" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Visualizar
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between">
-                            <div class="space-y-1 flex-1">
-                                <h3 class="text-lg font-semibold text-foreground">Analisador de Vendas</h3>
-                                <p class="text-sm text-muted-foreground flex items-center gap-2">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    Empresa ficticia
-                                </p>
-                                <p class="text-sm text-muted-foreground">Python/Streamlit</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6 space-y-4">
-                        <a href="https://sales-app-happdetpbpvdncoymkuv5u4.streamlit.app/" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Visualizar
-                        </a>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+                  <div class="px-6 pb-6 space-y-4">
+                     <a
+                        href="https://sales-app-happdetpbpvdncoymkuv5u4.streamlit.app/"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm"
+                     >
+                        <svg
+                           class="w-4 h-4"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                           ></path>
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                           ></path>
+                        </svg>
+                        Visualizar
+                     </a>
+                  </div>
+               </div>
 
-                <div class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between">
-                            <div class="space-y-1 flex-1">
-                                <h3 class="text-lg font-semibold text-foreground">Analise de produto</h3>
-                                <p class="text-sm text-muted-foreground flex items-center gap-2">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    Empresa ficticia
-                                </p>
-                                <p class="text-sm text-muted-foreground">Power BI</p>
-                            </div>
+               <div
+                  class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30"
+               >
+                  <div class="p-6">
+                     <div class="flex items-start justify-between">
+                        <div class="space-y-1 flex-1">
+                           <h3 class="text-lg font-semibold text-foreground">
+                              Analise de produto
+                           </h3>
+                           <p
+                              class="text-sm text-muted-foreground flex items-center gap-2"
+                           >
+                              <svg
+                                 class="w-3 h-3"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                 ></path>
+                              </svg>
+                              Empresa ficticia
+                           </p>
+                           <p class="text-sm text-muted-foreground">Power BI</p>
                         </div>
-                    </div>
-                    <div class="px-6 pb-6 space-y-4">
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiZmViMzhhOWQtZTk5OS00NzNhLThlNDAtYzFhNTlhN2FjNTFlIiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Visualizar
-                        </a>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+                  <div class="px-6 pb-6 space-y-4">
+                     <a
+                        href="https://app.powerbi.com/view?r=eyJrIjoiZmViMzhhOWQtZTk5OS00NzNhLThlNDAtYzFhNTlhN2FjNTFlIiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm"
+                     >
+                        <svg
+                           class="w-4 h-4"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                           ></path>
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                           ></path>
+                        </svg>
+                        Visualizar
+                     </a>
+                  </div>
+               </div>
 
-                <div class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between">
-                            <div class="space-y-1 flex-1">
-                                <h3 class="text-lg font-semibold text-foreground">Dashboard comercial</h3>
-                                <p class="text-sm text-muted-foreground flex items-center gap-2">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    Empresa ficticia
-                                </p>
-                                <p class="text-sm text-muted-foreground">Power BI</p>
-                            </div>
+               <div
+                  class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30"
+               >
+                  <div class="p-6">
+                     <div class="flex items-start justify-between">
+                        <div class="space-y-1 flex-1">
+                           <h3 class="text-lg font-semibold text-foreground">
+                              Dashboard comercial
+                           </h3>
+                           <p
+                              class="text-sm text-muted-foreground flex items-center gap-2"
+                           >
+                              <svg
+                                 class="w-3 h-3"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                 ></path>
+                              </svg>
+                              Empresa ficticia
+                           </p>
+                           <p class="text-sm text-muted-foreground">Power BI</p>
                         </div>
-                    </div>
-                    <div class="px-6 pb-6 space-y-4">
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiYzQ3MjcxODQtNGEyYy00MzRhLWE2NzctNjUxYzU1ZjkxMzgyIiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Visualizar
-                        </a>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+                  <div class="px-6 pb-6 space-y-4">
+                     <a
+                        href="https://app.powerbi.com/view?r=eyJrIjoiYzQ3MjcxODQtNGEyYy00MzRhLWE2NzctNjUxYzU1ZjkxMzgyIiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm"
+                     >
+                        <svg
+                           class="w-4 h-4"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                           ></path>
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                           ></path>
+                        </svg>
+                        Visualizar
+                     </a>
+                  </div>
+               </div>
 
-                <div class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between">
-                            <div class="space-y-1 flex-1">
-                                <h3 class="text-lg font-semibold text-foreground">Dashboard financeiro</h3>
-                                <p class="text-sm text-muted-foreground flex items-center gap-2">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    Empresa ficticia
-                                </p>
-                                <p class="text-sm text-muted-foreground">Power BI</p>
-                            </div>
+               <div
+                  class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30"
+               >
+                  <div class="p-6">
+                     <div class="flex items-start justify-between">
+                        <div class="space-y-1 flex-1">
+                           <h3 class="text-lg font-semibold text-foreground">
+                              Dashboard financeiro
+                           </h3>
+                           <p
+                              class="text-sm text-muted-foreground flex items-center gap-2"
+                           >
+                              <svg
+                                 class="w-3 h-3"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                 ></path>
+                              </svg>
+                              Empresa ficticia
+                           </p>
+                           <p class="text-sm text-muted-foreground">Power BI</p>
                         </div>
-                    </div>
-                    <div class="px-6 pb-6 space-y-4">
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiOTJlMjQ3ZDgtYWUzMi00MjRjLWEzOGUtZWE2NTIxYTBjYWE0IiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Visualizar
-                        </a>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+                  <div class="px-6 pb-6 space-y-4">
+                     <a
+                        href="https://app.powerbi.com/view?r=eyJrIjoiOTJlMjQ3ZDgtYWUzMi00MjRjLWEzOGUtZWE2NTIxYTBjYWE0IiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm"
+                     >
+                        <svg
+                           class="w-4 h-4"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                           ></path>
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                           ></path>
+                        </svg>
+                        Visualizar
+                     </a>
+                  </div>
+               </div>
 
-                <div class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between">
-                            <div class="space-y-1 flex-1">
-                                <h3 class="text-lg font-semibold text-foreground">Análise de fraudes com cartão de credito</h3>
-                                <p class="text-sm text-muted-foreground flex items-center gap-2">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    Empresa ficticia
-                                </p>
-                                <p class="text-sm text-muted-foreground">Power BI</p>
-                            </div>
+               <div
+                  class="bg-card shadow-card border border-border/50 rounded-lg hover:shadow-elevated transition-all hover:border-primary/30"
+               >
+                  <div class="p-6">
+                     <div class="flex items-start justify-between">
+                        <div class="space-y-1 flex-1">
+                           <h3 class="text-lg font-semibold text-foreground">
+                              Análise de fraudes com cartão de credito
+                           </h3>
+                           <p
+                              class="text-sm text-muted-foreground flex items-center gap-2"
+                           >
+                              <svg
+                                 class="w-3 h-3"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                 ></path>
+                              </svg>
+                              Empresa ficticia
+                           </p>
+                           <p class="text-sm text-muted-foreground">Power BI</p>
                         </div>
-                    </div>
-                    <div class="px-6 pb-6 space-y-4">
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiNzBmNTM3MGEtNDcwZi00ZWZhLTg3YjAtY2M3MjU1Mzg3MGM2IiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Visualizar
-                        </a>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+                  <div class="px-6 pb-6 space-y-4">
+                     <a
+                        href="https://app.powerbi.com/view?r=eyJrIjoiNzBmNTM3MGEtNDcwZi00ZWZhLTg3YjAtY2M3MjU1Mzg3MGM2IiwidCI6IjU5Mjc0ODMyLTQ1MjItNGIxYS1hMzMxLTcyNDI1Nzk2YzUxMiJ9"
+                        target="_blank"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-secondary transition-colors text-sm"
+                     >
+                        <svg
+                           class="w-4 h-4"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                           ></path>
+                           <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                           ></path>
+                        </svg>
+                        Visualizar
+                     </a>
+                  </div>
+               </div>
             </div>
-        </div>
-    </main>
+         </div>
+      </main>
 
-    <!-- Sheet para Pessoas/Usuários -->
-    <div id="peopleSheet" class="hidden fixed inset-0 z-50">
-        <div class="absolute inset-0 bg-black/50" onclick="closeSheet('people')"></div>
-        <div class="absolute right-0 top-0 h-full w-full sm:max-w-2xl bg-card shadow-xl overflow-y-auto">
+      <!-- Sheet para Pessoas/Usuários -->
+      <div id="peopleSheet" class="hidden fixed inset-0 z-50">
+         <div
+            class="absolute inset-0 bg-black/50"
+            onclick="closeSheet('people')"
+         ></div>
+         <div
+            class="absolute right-0 top-0 h-full w-full sm:max-w-2xl bg-card shadow-xl overflow-y-auto"
+         >
             <div class="p-6 border-b border-border">
-                <h2 class="text-xl font-semibold text-foreground">Pessoas Cadastradas</h2>
+               <h2 class="text-xl font-semibold text-foreground">
+                  Pessoas Cadastradas
+               </h2>
             </div>
             <div class="p-6 space-y-4">
-                <div class="flex items-center gap-3">
-                    <input type="text" placeholder="Buscar por nome ou email..." class="flex-1 px-3 py-2 border border-input rounded-md">
-                    <a href="register-user.html" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        Adicionar
-                    </a>
-                </div>
-                <p class="text-center text-muted-foreground py-8">Nenhum usuário encontrado</p>
+               <div class="flex items-center gap-3">
+                  <input
+                     type="text"
+                     placeholder="Buscar por nome ou email..."
+                     class="flex-1 px-3 py-2 border border-input rounded-md"
+                  />
+                  <a
+                     href="register-user.html"
+                     class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90"
+                  >
+                     <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                     >
+                        <path
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="2"
+                           d="M12 4v16m8-8H4"
+                        ></path>
+                     </svg>
+                     Adicionar
+                  </a>
+               </div>
+               <p class="text-center text-muted-foreground py-8">
+                  Nenhum usuário encontrado
+               </p>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
 
-    <!-- Sheet para Empresas -->
-    <div id="companiesSheet" class="hidden fixed inset-0 z-50">
-        <div class="absolute inset-0 bg-black/50" onclick="closeSheet('companies')"></div>
-        <div class="absolute right-0 top-0 h-full w-full sm:max-w-2xl bg-card shadow-xl overflow-y-auto">
+      <!-- Sheet para Empresas -->
+      <div id="companiesSheet" class="hidden fixed inset-0 z-50">
+         <div
+            class="absolute inset-0 bg-black/50"
+            onclick="closeSheet('companies')"
+         ></div>
+         <div
+            class="absolute right-0 top-0 h-full w-full sm:max-w-2xl bg-card shadow-xl overflow-y-auto"
+         >
             <div class="p-6 border-b border-border">
-                <h2 class="text-xl font-semibold text-foreground">Empresas Cadastradas</h2>
+               <h2 class="text-xl font-semibold text-foreground">
+                  Empresas Cadastradas
+               </h2>
             </div>
             <div class="p-6 space-y-4">
-                <div class="flex items-center gap-3">
-                    <input type="text" placeholder="Buscar empresa..." class="flex-1 px-3 py-2 border border-input rounded-md">
-                    <a href="register-company.html" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        Adicionar
-                    </a>
-                </div>
-                <p class="text-center text-muted-foreground py-8">Nenhuma empresa encontrada</p>
+               <div class="flex items-center gap-3">
+                  <input
+                     type="text"
+                     placeholder="Buscar empresa..."
+                     class="flex-1 px-3 py-2 border border-input rounded-md"
+                  />
+                  <a
+                     href="register-company.html"
+                     class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90"
+                  >
+                     <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                     >
+                        <path
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="2"
+                           d="M12 4v16m8-8H4"
+                        ></path>
+                     </svg>
+                     Adicionar
+                  </a>
+               </div>
+               <p class="text-center text-muted-foreground py-8">
+                  Nenhuma empresa encontrada
+               </p>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
 
-    <!-- Sheet para Novo Painel -->
-    <div id="newPanelSheet" class="hidden fixed inset-0 z-50">
-        <div class="absolute inset-0 bg-black/50" onclick="closeSheet('newPanel')"></div>
-        <div class="absolute right-0 top-0 h-full w-full sm:max-w-md bg-card shadow-xl overflow-y-auto">
+      <!-- Sheet para Novo Painel -->
+      <div id="newPanelSheet" class="hidden fixed inset-0 z-50">
+         <div
+            class="absolute inset-0 bg-black/50"
+            onclick="closeSheet('newPanel')"
+         ></div>
+         <div
+            class="absolute right-0 top-0 h-full w-full sm:max-w-md bg-card shadow-xl overflow-y-auto"
+         >
             <div class="p-6 border-b border-border">
-                <h2 class="text-xl font-semibold text-foreground">Novo Painel de BI</h2>
+               <h2 class="text-xl font-semibold text-foreground">
+                  Novo Painel de BI
+               </h2>
             </div>
             <div class="p-6 space-y-6">
-                <div class="space-y-4">
-                    <h3 class="text-sm font-semibold text-foreground">Informações Básicas</h3>
-                    <div class="space-y-3">
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-foreground">Nome do Painel *</label>
-                            <input type="text" placeholder="Ex: Vendas Mensais" class="w-full px-3 py-2 border border-input rounded-md">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-foreground">Empresa *</label>
-                            <input type="text" placeholder="Nome da empresa" class="w-full px-3 py-2 border border-input rounded-md">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-foreground">URL do Painel *</label>
-                            <input type="url" placeholder="https://..." class="w-full px-3 py-2 border border-input rounded-md">
-                        </div>
-                    </div>
-                </div>
-                <hr class="border-border">
-                <div class="space-y-3">
-                    <button class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        Criar Painel
-                    </button>
-                    <button onclick="closeSheet('newPanel')" class="w-full px-4 py-2 border border-border rounded-md hover:bg-secondary">
-                        Cancelar
-                    </button>
-                </div>
+               <div class="space-y-4">
+                  <h3 class="text-sm font-semibold text-foreground">
+                     Informações Básicas
+                  </h3>
+                  <div class="space-y-3">
+                     <div class="space-y-2">
+                        <label class="text-sm font-medium text-foreground"
+                           >Nome do Painel *</label
+                        >
+                        <input
+                           type="text"
+                           placeholder="Ex: Vendas Mensais"
+                           class="w-full px-3 py-2 border border-input rounded-md"
+                        />
+                     </div>
+                     <div class="space-y-2">
+                        <label class="text-sm font-medium text-foreground"
+                           >Empresa *</label
+                        >
+                        <input
+                           type="text"
+                           placeholder="Nome da empresa"
+                           class="w-full px-3 py-2 border border-input rounded-md"
+                        />
+                     </div>
+                     <div class="space-y-2">
+                        <label class="text-sm font-medium text-foreground"
+                           >URL do Painel *</label
+                        >
+                        <input
+                           type="url"
+                           placeholder="https://..."
+                           class="w-full px-3 py-2 border border-input rounded-md"
+                        />
+                     </div>
+                  </div>
+               </div>
+               <hr class="border-border" />
+               <div class="space-y-3">
+                  <button
+                     class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90"
+                  >
+                     <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                     >
+                        <path
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="2"
+                           d="M12 4v16m8-8H4"
+                        ></path>
+                     </svg>
+                     Criar Painel
+                  </button>
+                  <button
+                     onclick="closeSheet('newPanel')"
+                     class="w-full px-4 py-2 border border-border rounded-md hover:bg-secondary"
+                  >
+                     Cancelar
+                  </button>
+               </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
 
-    <!-- Sheet para Gerenciar Painel -->
-    <div id="manageSheet" class="hidden fixed inset-0 z-50">
-        <div class="absolute inset-0 bg-black/50" onclick="closeSheet('manage')"></div>
-        <div class="absolute right-0 top-0 h-full w-full sm:max-w-md bg-card shadow-xl overflow-y-auto">
+      <!-- Sheet para Gerenciar Painel -->
+      <div id="manageSheet" class="hidden fixed inset-0 z-50">
+         <div
+            class="absolute inset-0 bg-black/50"
+            onclick="closeSheet('manage')"
+         ></div>
+         <div
+            class="absolute right-0 top-0 h-full w-full sm:max-w-md bg-card shadow-xl overflow-y-auto"
+         >
             <div class="p-6 border-b border-border">
-                <h2 class="text-xl font-semibold text-foreground">Gerenciar Painel</h2>
+               <h2 class="text-xl font-semibold text-foreground">
+                  Gerenciar Painel
+               </h2>
             </div>
             <div class="p-6 space-y-6">
-                <div class="space-y-4">
-                    <h3 class="text-sm font-semibold text-foreground">Informações Básicas</h3>
-                    <div class="space-y-3">
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-foreground">Nome do Painel</label>
-                            <input type="text" id="manageName" class="w-full px-3 py-2 border border-input rounded-md">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-medium text-foreground">URL do Painel</label>
-                            <input type="url" id="manageUrl" class="w-full px-3 py-2 border border-input rounded-md">
-                        </div>
-                    </div>
-                    <button class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                        </svg>
-                        Salvar Alterações
-                    </button>
-                </div>
+               <div class="space-y-4">
+                  <h3 class="text-sm font-semibold text-foreground">
+                     Informações Básicas
+                  </h3>
+                  <div class="space-y-3">
+                     <div class="space-y-2">
+                        <label class="text-sm font-medium text-foreground"
+                           >Nome do Painel</label
+                        >
+                        <input
+                           type="text"
+                           id="manageName"
+                           class="w-full px-3 py-2 border border-input rounded-md"
+                        />
+                     </div>
+                     <div class="space-y-2">
+                        <label class="text-sm font-medium text-foreground"
+                           >URL do Painel</label
+                        >
+                        <input
+                           type="url"
+                           id="manageUrl"
+                           class="w-full px-3 py-2 border border-input rounded-md"
+                        />
+                     </div>
+                  </div>
+                  <button
+                     class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90"
+                  >
+                     <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                     >
+                        <path
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="2"
+                           d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        ></path>
+                     </svg>
+                     Salvar Alterações
+                  </button>
+               </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
 
-    <script>
-        function toggleDropdown() {
+      <script>
+         function toggleDropdown() {
             const dropdown = document.getElementById('dropdown');
             dropdown.classList.toggle('hidden');
-        }
+         }
 
-        function openSheet(type) {
+         function openSheet(type) {
             document.getElementById(type + 'Sheet').classList.remove('hidden');
             document.getElementById('dropdown').classList.add('hidden');
-        }
+         }
 
-        function closeSheet(type) {
+         function closeSheet(type) {
             document.getElementById(type + 'Sheet').classList.add('hidden');
-        }
+         }
 
-        // Fechar dropdown ao clicar fora
-        document.addEventListener('click', function(event) {
+         // Fechar dropdown ao clicar fora
+         document.addEventListener('click', function (event) {
             const dropdown = document.getElementById('dropdown');
-            const button = event.target.closest('button[onclick="toggleDropdown()"]');
+            const button = event.target.closest(
+               'button[onclick="toggleDropdown()"]'
+            );
             if (!button && !dropdown.contains(event.target)) {
-                dropdown.classList.add('hidden');
+               dropdown.classList.add('hidden');
             }
-        });
-    </script>
-</body>
+         });
+      </script>
+   </body>
 </html>
